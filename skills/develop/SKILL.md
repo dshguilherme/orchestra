@@ -34,6 +34,17 @@ Code lives in the project's real repo (create or use the existing one; note its 
 3. **Gates**: spec confirmed -> design; vault reviewed -> plan; plan approved -> build (always explicit, build is the expensive step). The user can jump back at any time ("a requirement changed"): amend `spec.md`, mark affected vault nodes and tasks `stale` in `state.md`, don't delete.
 4. **Finish** when all tasks are done and the final sync check (design-vault, sync mode) shows no drift between vault, spec and code.
 
+## Adopting an existing project (brownfield)
+When the project already has a roadmap, requirements, tests and a codebase, **don't restart it**:
+- **Find the authority.** Read the project's own docs first (CLAUDE.md/AGENTS.md, ROADMAP, status files). If one document is declared the source of truth for status and tests, it stays so. The orchestra files *index* it (spec.md with its existing IDs, thresholds referenced not copied, a dated status snapshot) and never become a second place where status lives; the vault's `status:` follows the authority, not the other way round.
+- **Adopt existing IDs** (features, test IDs) as requirement and acceptance IDs. Only new items get new IDs.
+- **Draft the spec from the documents**, mark it DRAFT, and interview only the gaps and open decisions the documents themselves leave open, one question at a time. Ask about priorities and anything the documents contradict.
+- **Respect the project's rules**: its test-first and threshold-change rules, labelling of stubs, forbidden dependencies, commit style, what must never be committed, and its build commands. Where the project already has a build/review tool (e.g. a `.gauntlet/` setup), ask whether to keep it alongside or retire it; don't touch it unasked.
+- **Vault scope**: document the code in the order the plan needs it: nodes the next sprint touches first, the rest on demand. Existing nodes are `implemented` / `verified` per the authority; check against code in sync mode before trusting a doc.
+- **Plan only the next increment** (a sprint or two), not the whole roadmap; later sprints are re-planned when reached because earlier results change them.
+- **Public vs sealed tests**: the project's own test catalogue is public (builders must pass it). Held-out tests are additional: variants of the same references (other orientations, sizes, parameters, degenerate inputs) with thresholds fixed at plan time. Changing a threshold needs the project's own change process (e.g. a changelog entry with the reason).
+- **Where artifacts live**: where the user says; when asked to keep them out of git, prefer `.git/info/exclude` over editing a tracked `.gitignore`. Held-out tests must stay out of every builder worktree (ignored files are not in worktrees; confirm).
+
 ## Rules for all stages
 - The user decides; "proceed" from the user is the only override of the interview's own satisfaction check.
 - Requirements have stable IDs (`R-001`). Everything downstream traces to them, and every requirement traces to code and tests. Untraced items in either direction are defects.
