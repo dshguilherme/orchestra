@@ -1,0 +1,11 @@
+{
+  "name": "orchestra",
+  "owner": { "name": "dshguilherme" },
+  "plugins": [
+    {
+      "name": "orchestra",
+      "source": "./",
+      "description": "Multi-model research and software-development pipelines with Claude subagents, Hermes, OpenClaw and Gemini cross-checks."
+    }
+  ]
+}
