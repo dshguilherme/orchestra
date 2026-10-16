@@ -8,6 +8,8 @@ A Claude Code plugin of multi-model orchestration pipelines. Claude subagents do
 
 **Develop** (`develop` conductor): `spec-interview` -> `design-vault` (Obsidian node graph / function docs) -> `dev-plan` (with sealed held-out tests) -> `build`
 
+**Utilities:** `one-shot` (interview, then a single orchestrator/subagent goal loop on models you pick) and `your-words` (restate the intent before working).
+
 ## Install
 
 ```
